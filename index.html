@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ur" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reyan Hussain Confectionary</title>
+
+<style>
+:root {
+  --gold: #c8960c;
+  --gold-light: #f0c040;
+  --gold-dark: #8a6200;
+  --brown: #3a1a00;
+  --cream: #fff8ee;
+  --red: #c0392b;
+  --green: #1a7a3a;
+  --green-light: #27ae60;
+  --blue: #1565c0;
+  --text: #2c1a00;
+  --shadow: 0 4px 24px rgba(200,150,12,0.13);
+  --radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Arial, sans-serif;
+  background: #1a0a00;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.app-header {
+  background: linear-gradient(135deg, #3a1a00 0%, #7a4000 60%, #c8960c 100%);
+  padding: 14px 16px 10px;
+  text-align: center;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 3px 20px rgba(200,150,12,0.4);
+}
+.app-header h1 {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  color: var(--gold-light);
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.app-header p { font-size: 11px; color: #f0c04099; margin-top: 2px; }
+
+/* NAV TABS */
+.nav-tabs {
+  display: flex; overflow-x: auto; gap: 4px;
+  background: #2a0e00; padding: 8px 8px 0;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0; padding: 8px 14px; border: none; border-radius: 10px 10px 0 0;
+  background: #3a1800; color: #f0c04077; font-family: Arial, sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s;
+  display: flex; align-items: center; gap: 5px;
+}
+.tab-btn.active { background: var(--cream); color: var(--brown); }
+.tab-btn:hover:not(.active) { background: #5a2800; color: var(--gold-light); }
+
+/* MAIN CONTENT */
+.main { background: var(--cream); min-height: calc(100vh - 110px); }
+.tab-panel { display: none; padding: 14px; }
+.tab-panel.active { display: block; }
+
+/* CARDS */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  border: 1.5px solid #f0e4c8;
+}
+.card-title {
+  font-family: Georgia, serif;
+  font-size: 16px; color: var(--gold-dark);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 7px;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 9px 16px; border: none; border-radius: 9px;
+  font-family: Arial, sans-serif; font-weight: 700; font-size: 13px;
+  cursor: pointer; transition: all .2s; display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #fff; }
+.btn-gold:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,150,12,0.4); }
+.btn-green { background: var(--green); color: #fff; }
+.btn-green:hover { background: var(--green-light); }
+.btn-red { background: var(--red); color: #fff; }
+.btn-blue { background: var(--blue); color: #fff; }
+.btn-wa { background: #25D366; color: #fff; }
+.btn-sm { padding: 5px 10px; font-size: 11px; border-radius: 7px; }
+.btn-full { width: 100%; justify-content: center; margin-top: 6px; }
+
+/* INPUTS */
+.form-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.form-group { flex: 1; min-width: 120px; }
+.form-group label { font-size: 11px; font-weight: 700; color: var(--gold-dark); display: block; margin-bottom: 3px; }
+input, select, textarea {
+  width: 100%; padding: 9px 10px; border: 1.5px solid #e0d0b0;
+  border-radius: 8px; font-family: Arial, sans-serif; font-size: 13px;
+  background: #fffdf8; color: var(--text); outline: none;
+  transition: border-color .2s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+textarea { resize: vertical; min-height: 70px; }
+
+/* ITEMS TABLE */
+.items-list { display: flex; flex-direction: column; gap: 8px; }
+.item-card {
+  background: #fffdf8; border: 1.5px solid #f0e4c8;
+  border-radius: 10px; padding: 10px 12px;
+  display: flex; align-items: center; gap: 10px;
+  transition: box-shadow .2s;
+}
+.item-card:hover { box-shadow: 0 2px 10px rgba(200,150,12,0.15); }
+.item-check { width: 20px; height: 20px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
+.item-info { flex: 1; }
+.item-name { font-weight: 800; font-size: 14px; color: var(--brown); }
+.item-prices { font-size: 11px; color: #888; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
+.profit-badge {
+  background: #e8f5e9; color: var(--green); font-size: 11px;
+  font-weight: 700; padding: 2px 7px; border-radius: 20px;
+}
+.loss-badge { background: #fdecea; color: var(--red); }
+.item-actions { display: flex; gap: 5px; }
+
+/* BADGE */
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+}
+.badge-gold { background: #fff3cd; color: var(--gold-dark); }
+.badge-green { background: #d4edda; color: var(--green); }
+.badge-red { background: #fdecea; color: var(--red); }
+
+/* STATS ROW */
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.stat-box {
+  background: #fff; border-radius: 10px; padding: 10px 8px; text-align: center;
+  border: 1.5px solid #f0e4c8; box-shadow: var(--shadow);
+}
+.stat-box .val { font-size: 18px; font-weight: 900; }
+.stat-box .lbl { font-size: 10px; color: #888; margin-top: 2px; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; padding: 14px;
+}
+.modal-overlay.hidden { display: none; }
+.modal {
+  background: var(--cream); border-radius: var(--radius);
+  width: 100%; max-width: 400px; padding: 18px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  max-height: 90vh; overflow-y: auto;
+}
+.modal h3 { font-family: Georgia, serif; color: var(--gold-dark); margin-bottom: 14px; font-size: 18px; }
+.modal-close { float: right; background: #eee; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 16px; }
+
+/* CALCULATOR */
+.calc-display {
+  background: var(--brown); color: var(--gold-light);
+  font-family: Georgia, serif;
+  font-size: 28px; text-align: right; padding: 14px 16px;
+  border-radius: 10px; margin-bottom: 10px; min-height: 60px;
+  word-break: break-all; letter-spacing: 2px;
+}
+.calc-sub { font-size: 13px; color: #f0c04077; margin-bottom: 4px; }
+.calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+.calc-btn {
+  padding: 16px 6px; border: none; border-radius: 9px;
+  font-size: 16px; font-weight: 700; cursor: pointer; transition: all .15s;
+  font-family: Arial, sans-serif;
+}
+.calc-btn:active { transform: scale(0.94); }
+.calc-num { background: #fff; color: var(--brown); }
+.calc-op { background: var(--gold); color: #fff; }
+.calc-eq { background: var(--green); color: #fff; }
+.calc-clr { background: var(--red); color: #fff; }
+.calc-span2 { grid-column: span 2; }
+
+/* UDHAR (Credit) */
+.udhar-card {
+  background: #fff; border: 1.5px solid #f0e4c8;
+  border-radius: 10px; padding: 12px; margin-bottom: 10px;
+}
+.udhar-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.udhar-name { font-weight: 800; font-size: 15px; color: var(--brown); }
+.udhar-amount { font-size: 18px; font-weight: 900; color: var(--red); }
+.udhar-detail { font-size: 11px; color: #888; margin-top: 3px; }
+
+/* CONTACTS */
+.contact-card {
+  background: #fff; border: 1.5px solid #f0e4c8;
+  border-radius: 10px; padding: 10px 12px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 10px;
+}
+.contact-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 900; flex-shrink: 0;
+}
+.contact-info { flex: 1; }
+.contact-name { font-weight: 800; font-size: 14px; color: var(--brown); }
+.contact-num { font-size: 12px; color: #888; }
+.contact-type { font-size: 10px; }
+
+/* SECTION HEADER */
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.section-title { font-weight: 800; font-size: 15px; color: var(--brown); }
+
+/* ORDER PREVIEW */
+.order-preview {
+  background: linear-gradient(135deg, #fffdf8, #fff8ee);
+  border: 2px dashed var(--gold); border-radius: 10px;
+  padding: 12px; margin-bottom: 10px; font-size: 13px;
+}
+.order-preview h4 { font-family: Georgia, serif; color: var(--gold-dark); margin-bottom: 8px; }
+.order-item-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #f0e4c8; }
+.order-total-row { display: flex; justify-content: space-between; padding: 6px 0; font-weight: 800; font-size: 15px; }
+
+/* PROFIT SUMMARY */
+.profit-summary {
+  background: linear-gradient(135deg, #1a7a3a, #27ae60);
+  color: #fff; border-radius: 12px; padding: 14px; margin-bottom: 12px;
+  text-align: center;
+}
+.profit-summary .big-num { font-size: 32px; font-weight: 900; letter-spacing: 1px; }
+.profit-summary p { font-size: 12px; opacity: .85; }
+
+.empty-state { text-align: center; padding: 30px 10px; color: #bbb; font-size: 13px; }
+.empty-state .icon { font-size: 40px; margin-bottom: 8px; }
+
+/* Floating action */
+.fab {
+  position: fixed; bottom: 20px; right: 18px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #fff; border: none; border-radius: 50px;
+  padding: 13px 20px; font-size: 22px; font-weight: 900;
+  box-shadow: 0 6px 24px rgba(200,150,12,0.5);
+  cursor: pointer; z-index: 500; transition: transform .2s;
+  display: flex; align-items: center; gap: 8px; font-family: Arial,sans-serif;
+}
+.fab:hover { transform: scale(1.06); }
+
+hr.divider { border: none; border-top: 1.5px solid #f0e4c8; margin: 10px 0; }
+
+.wa-green { color: #25D366; }
+.rupee { font-family: Arial, sans-serif; }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🍬 Reyan Hussain Confectionary</h1>
+  <p>Professional Business Manager</p>
+</div>
+
+<div class="nav-tabs" id="navTabs">
+  <button class="tab-btn active" onclick="showTab('items')">🏪 Items</button>
+  <button class="tab-btn" onclick="showTab('order')">🛒 Order</button>
+  <button class="tab-btn" onclick="showTab('profit')">📊 Profit</button>
+  <button class="tab-btn" onclick="showTab('udhar')">💸 Udhar</button>
+  <button class="tab-btn" onclick="showTab('contacts')">📞 Contacts</button>
+  <button class="tab-btn" onclick="showTab('calc')">🧮 Calc</button>
+</div>
+
+<div class="main">
+
+<!-- ===== ITEMS TAB ===== -->
+<div id="tab-items" class="tab-panel active">
+  <div class="card">
+    <div class="card-title">🏪 Items Store</div>
+    <div class="section-header">
+      <span class="section-title">All Items (<span id="itemCount">0</span>)</span>
+      <button class="btn btn-gold btn-sm" onclick="openItemModal()">+ Add Item</button>
+    </div>
+    <div id="itemsList" class="items-list">
+      <div class="empty-state"><div class="icon">📦</div>Koi item nahi. "Add Item" press karain.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ORDER TAB ===== -->
+<div id="tab-order" class="tab-panel">
+  <div class="card">
+    <div class="card-title">🛒 Order Banao</div>
+    <p style="font-size:12px;color:#888;margin-bottom:10px;">Items tab mein tick karen phir yahan order banao</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Customer Name</label>
+        <input type="text" id="orderCustomer" placeholder="Customer ka naam">
+      </div>
+      <div class="form-group">
+        <label>Customer Phone</label>
+        <input type="tel" id="orderPhone" placeholder="+923001234567">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="orderDate">
+      </div>
+      <div class="form-group">
+        <label>Order Note</label>
+        <input type="text" id="orderNote" placeholder="Optional note">
+      </div>
+    </div>
+
+    <div id="orderPreview" class="order-preview">
+      <h4>📋 Order Preview</h4>
+      <div id="orderItemsList"><p style="color:#bbb;font-size:12px;">Items tick karain...</p></div>
+      <hr class="divider">
+      <div class="order-total-row"><span>Total:</span><span id="orderTotal" class="rupee">Rs. 0</span></div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-wa" onclick="sendOrderWhatsApp()">📱 WhatsApp Order</button>
+      <button class="btn btn-blue" onclick="sendOrderSMS()">💬 SMS Send</button>
+      <button class="btn btn-gold" onclick="generateBillPDF()">📄 Bill PDF (WhatsApp)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PROFIT TAB ===== -->
+<div id="tab-profit" class="tab-panel">
+  <div id="profitSummaryBox" class="profit-summary">
+    <p>Total Profit</p>
+    <div class="big-num rupee" id="totalProfitDisplay">Rs. 0</div>
+    <p>Abhi tak ka total faida</p>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="val rupee" id="statTotalCost" style="color:var(--red)">0</div>
+      <div class="lbl">Cost Price</div>
+    </div>
+    <div class="stat-box">
+      <div class="val rupee" id="statTotalSell" style="color:var(--blue)">0</div>
+      <div class="lbl">Sell Price</div>
+    </div>
+    <div class="stat-box">
+      <div class="val" id="statItemCount" style="color:var(--gold-dark)">0</div>
+      <div class="lbl">Items</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-header">
+      <span class="section-title">Per Item Profit</span>
+      <button class="btn btn-red btn-sm" onclick="confirmClearData()">🗑 Clear All</button>
+    </div>
+    <div id="profitItemList"></div>
+  </div>
+</div>
+
+<!-- ===== UDHAR TAB ===== -->
+<div id="tab-udhar" class="tab-panel">
+  <div class="card">
+    <div class="card-title">💸 Udhar Khata</div>
+    <button class="btn btn-gold btn-full" onclick="openUdharModal()">+ Udhar Add Karen</button>
+  </div>
+  <div id="udharList"></div>
+</div>
+
+<!-- ===== CONTACTS TAB ===== -->
+<div id="tab-contacts" class="tab-panel">
+  <div class="card">
+    <div class="card-title">📞 Contacts</div>
+    <button class="btn btn-gold btn-full" onclick="openContactModal()">+ Contact Add Karen</button>
+  </div>
+  <div id="contactList"></div>
+</div>
+
+<!-- ===== CALCULATOR TAB ===== -->
+<div id="tab-calc" class="tab-panel">
+  <div class="card">
+    <div class="card-title">🧮 Calculator</div>
+    <div class="calc-sub" id="calcSub">&nbsp;</div>
+    <div class="calc-display" id="calcDisplay">0</div>
+    <div class="calc-grid">
+      <button class="calc-btn calc-clr" onclick="calcClear()">AC</button>
+      <button class="calc-btn calc-op" onclick="calcSign()">+/-</button>
+      <button class="calc-btn calc-op" onclick="calcPercent()">%</button>
+      <button class="calc-btn calc-op" onclick="calcOp('/')">÷</button>
+
+      <button class="calc-btn calc-num" onclick="calcNum('7')">7</button>
+      <button class="calc-btn calc-num" onclick="calcNum('8')">8</button>
+      <button class="calc-btn calc-num" onclick="calcNum('9')">9</button>
+      <button class="calc-btn calc-op" onclick="calcOp('*')">×</button>
+
+      <button class="calc-btn calc-num" onclick="calcNum('4')">4</button>
+      <button class="calc-btn calc-num" onclick="calcNum('5')">5</button>
+      <button class="calc-btn calc-num" onclick="calcNum('6')">6</button>
+      <button class="calc-btn calc-op" onclick="calcOp('-')">−</button>
+
+      <button class="calc-btn calc-num" onclick="calcNum('1')">1</button>
+      <button class="calc-btn calc-num" onclick="calcNum('2')">2</button>
+      <button class="calc-btn calc-num" onclick="calcNum('3')">3</button>
+      <button class="calc-btn calc-op" onclick="calcOp('+')">+</button>
+
+      <button class="calc-btn calc-num calc-span2" onclick="calcNum('0')">0</button>
+      <button class="calc-btn calc-num" onclick="calcDot()">.</button>
+      <button class="calc-btn calc-eq" onclick="calcEquals()">=</button>
+    </div>
+    <hr class="divider">
+    <div style="font-size:12px;color:#888;font-weight:700;margin-bottom:6px;">💹 Profit Calculator</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Cost Price (Rs.)</label>
+        <input type="number" id="pcCost" placeholder="0" oninput="calcProfit()">
+      </div>
+      <div class="form-group">
+        <label>Sell Price (Rs.)</label>
+        <input type="number" id="pcSell" placeholder="0" oninput="calcProfit()">
+      </div>
+    </div>
+    <div id="profitCalcResult" style="font-size:14px;font-weight:700;text-align:center;padding:8px;border-radius:8px;background:#f8f8f8;"></div>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<!-- ===== ITEM MODAL ===== -->
+<div class="modal-overlay hidden" id="itemModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('itemModal')">✕</button>
+    <h3 id="itemModalTitle">➕ Naya Item</h3>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label>Item Name *</label>
+      <input type="text" id="iName" placeholder="e.g. Chocolate, Biscuit">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category</label>
+        <select id="iCat">
+          <option>Mithai</option><option>Biscuit</option><option>Chocolate</option>
+          <option>Drink</option><option>Snack</option><option>Bakery</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Unit</label>
+        <select id="iUnit">
+          <option>piece</option><option>kg</option><option>gram</option>
+          <option>packet</option><option>box</option><option>dozen</option><option>litre</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Cost Price (Rs.) *</label>
+        <input type="number" id="iCost" placeholder="0" oninput="previewItemProfit()">
+      </div>
+      <div class="form-group">
+        <label>Sell Price (Rs.) *</label>
+        <input type="number" id="iSell" placeholder="0" oninput="previewItemProfit()">
+      </div>
+    </div>
+    <div id="itemProfitPreview" style="font-size:13px;font-weight:700;text-align:center;padding:7px;border-radius:8px;margin-bottom:10px;background:#f8f8f8;"></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Stock Qty</label>
+        <input type="number" id="iStock" placeholder="0" value="0">
+      </div>
+      <div class="form-group">
+        <label>Min Stock Alert</label>
+        <input type="number" id="iMinStock" placeholder="5" value="5">
+      </div>
+    </div>
+    <input type="hidden" id="iEditId">
+    <button class="btn btn-gold btn-full" onclick="saveItem()">💾 Save Item</button>
+  </div>
+</div>
+
+<!-- ===== UDHAR MODAL ===== -->
+<div class="modal-overlay hidden" id="udharModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('udharModal')">✕</button>
+    <h3>💸 Udhar Add Karen</h3>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label>Customer Name *</label>
+      <input type="text" id="uName" placeholder="Naam">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Phone *</label>
+        <input type="tel" id="uPhone" placeholder="+92...">
+      </div>
+      <div class="form-group">
+        <label>Amount (Rs.) *</label>
+        <input type="number" id="uAmount" placeholder="0">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="uDate">
+      </div>
+      <div class="form-group">
+        <label>Due Date</label>
+        <input type="date" id="uDue">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label>Items / Note</label>
+      <textarea id="uNote" placeholder="Kya liya, kab dega..."></textarea>
+    </div>
+    <input type="hidden" id="uEditId">
+    <button class="btn btn-gold btn-full" onclick="saveUdhar()">💾 Save Udhar</button>
+  </div>
+</div>
+
+<!-- ===== CONTACT MODAL ===== -->
+<div class="modal-overlay hidden" id="contactModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('contactModal')">✕</button>
+    <h3>📞 Contact Add Karen</h3>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label>Name *</label>
+      <input type="text" id="cName" placeholder="Naam">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Phone *</label>
+        <input type="tel" id="cPhone" placeholder="+92...">
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select id="cType">
+          <option value="seller">Seller (Supplier)</option>
+          <option value="buyer">Buyer (Buyer)</option>
+          <option value="customer">Customer</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label>Note (Optional)</label>
+      <input type="text" id="cNote" placeholder="e.g. Main supplier, Wholesale">
+    </div>
+    <input type="hidden" id="cEditId">
+    <button class="btn btn-gold btn-full" onclick="saveContact()">💾 Save</button>
+  </div>
+</div>
+
+<script>
+// ========== STATE ==========
+var items = JSON.parse(localStorage.getItem('rhc_items') || '[]');
+var udharList = JSON.parse(localStorage.getItem('rhc_udhar') || '[]');
+var contacts = JSON.parse(localStorage.getItem('rhc_contacts') || '[]');
+
+// Set today's date defaults
+document.getElementById('orderDate').value = new Date().toISOString().split('T')[0];
+document.getElementById('uDate').value = new Date().toISOString().split('T')[0];
+
+// ========== TABS ==========
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'order') updateOrderPreview();
+  if (name === 'profit') renderProfit();
+  if (name === 'udhar') renderUdhar();
+  if (name === 'contacts') renderContacts();
+}
+
+// ========== MODALS ==========
+function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+// ========== ITEMS ==========
+function openItemModal(editId) {
+  document.getElementById('iName').value = '';
+  document.getElementById('iCost').value = '';
+  document.getElementById('iSell').value = '';
+  document.getElementById('iStock').value = '0';
+  document.getElementById('iMinStock').value = '5';
+  document.getElementById('iEditId').value = '';
+  document.getElementById('itemModalTitle').textContent = '➕ Naya Item';
+  document.getElementById('itemProfitPreview').textContent = '';
+
+  if (editId) {
+    var item = items.find(function(i) { return i.id == editId; });
+    if (item) {
+      document.getElementById('iName').value = item.name;
+      document.getElementById('iCat').value = item.category || 'Other';
+      document.getElementById('iUnit').value = item.unit || 'piece';
+      document.getElementById('iCost').value = item.costPrice;
+      document.getElementById('iSell').value = item.sellPrice;
+      document.getElementById('iStock').value = item.stock || 0;
+      document.getElementById('iMinStock').value = item.minStock || 5;
+      document.getElementById('iEditId').value = editId;
+      document.getElementById('itemModalTitle').textContent = '✏️ Item Edit Karen';
+      previewItemProfit();
+    }
+  }
+  openModal('itemModal');
+}
+
+function previewItemProfit() {
+  var cost = parseFloat(document.getElementById('iCost').value) || 0;
+  var sell = parseFloat(document.getElementById('iSell').value) || 0;
+  var el = document.getElementById('itemProfitPreview');
+  if (!cost || !sell) { el.textContent = ''; return; }
+  var profit = sell - cost;
+  var pct = ((profit / cost) * 100).toFixed(1);
+  if (profit >= 0) {
+    el.style.background = '#e8f5e9'; el.style.color = '#1a7a3a';
+    el.textContent = 'Faida: Rs. ' + profit.toFixed(2) + ' (' + pct + '%)';
+  } else {
+    el.style.background = '#fdecea'; el.style.color = '#c0392b';
+    el.textContent = 'Nuksan: Rs. ' + Math.abs(profit).toFixed(2) + ' (' + pct + '%)';
+  }
+}
+
+function saveItem() {
+  var name = document.getElementById('iName').value.trim();
+  var cost = parseFloat(document.getElementById('iCost').value);
+  var sell = parseFloat(document.getElementById('iSell').value);
+  if (!name) { alert('Item ka naam darain!'); return; }
+  if (isNaN(cost) || isNaN(sell)) { alert('Cost aur Sell price darain!'); return; }
+
+  var editId = document.getElementById('iEditId').value;
+  if (editId) {
+    items = items.map(function(i) {
+      if (i.id == editId) {
+        return {
+          id: i.id, name: name,
+          category: document.getElementById('iCat').value,
+          unit: document.getElementById('iUnit').value,
+          costPrice: cost, sellPrice: sell,
+          stock: parseInt(document.getElementById('iStock').value) || 0,
+          minStock: parseInt(document.getElementById('iMinStock').value) || 5,
+          checked: i.checked
+        };
+      }
+      return i;
+    });
+  } else {
+    items.push({
+      id: Date.now(), name: name,
+      category: document.getElementById('iCat').value,
+      unit: document.getElementById('iUnit').value,
+      costPrice: cost, sellPrice: sell,
+      stock: parseInt(document.getElementById('iStock').value) || 0,
+      minStock: parseInt(document.getElementById('iMinStock').value) || 5,
+      checked: false, qty: 1
+    });
+  }
+  saveItems();
+  closeModal('itemModal');
+  renderItems();
+}
+
+function deleteItem(id) {
+  if (!confirm('Yeh item delete karain?')) return;
+  items = items.filter(function(i) { return i.id != id; });
+  saveItems();
+  renderItems();
+}
+
+function toggleItem(id) {
+  items = items.map(function(i) {
+    if (i.id == id) i.checked = !i.checked;
+    return i;
+  });
+  saveItems();
+}
+
+function updateItemQty(id, val) {
+  items = items.map(function(i) {
+    if (i.id == id) i.qty = Math.max(1, parseInt(val) || 1);
+    return i;
+  });
+  saveItems();
+  updateOrderPreview();
+}
+
+function saveItems() { localStorage.setItem('rhc_items', JSON.stringify(items)); }
+
+function renderItems() {
+  var el = document.getElementById('itemsList');
+  document.getElementById('itemCount').textContent = items.length;
+  if (!items.length) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📦</div>Koi item nahi. "Add Item" press karain.</div>';
+    return;
+  }
+  el.innerHTML = items.map(function(item) {
+    var profit = item.sellPrice - item.costPrice;
+    var pct = item.costPrice ? ((profit / item.costPrice) * 100).toFixed(1) : 0;
+    var badgeClass = profit >= 0 ? 'profit-badge' : 'profit-badge loss-badge';
+    var badgeText = profit >= 0 ? '+Rs.' + profit.toFixed(0) + ' (' + pct + '%)' : '-Rs.' + Math.abs(profit).toFixed(0);
+    var lowStock = item.stock <= item.minStock;
+    return '<div class="item-card">' +
+      '<input type="checkbox" class="item-check" ' + (item.checked ? 'checked' : '') + ' onchange="toggleItem(' + item.id + ');updateOrderPreview()">' +
+      '<div class="item-info">' +
+        '<div class="item-name">' + item.name + ' <span style="font-size:10px;color:#888;font-weight:400;">[' + item.category + ']</span></div>' +
+        '<div class="item-prices">' +
+          '<span>Cost: <b>Rs.' + item.costPrice + '</b></span>' +
+          '<span>Sell: <b>Rs.' + item.sellPrice + '</b></span>' +
+          '<span>Qty: <input type="number" min="1" value="' + (item.qty || 1) + '" style="width:50px;padding:2px 5px;font-size:12px;" onchange="updateItemQty(' + item.id + ',this.value)"></span>' +
+          '<span>Stock: <b ' + (lowStock ? 'style="color:var(--red)"' : '') + '>' + item.stock + '</b>' + (lowStock ? ' ⚠️' : '') + '</span>' +
+        '</div>' +
+        '<span class="' + badgeClass + '">' + badgeText + ' per ' + item.unit + '</span>' +
+      '</div>' +
+      '<div class="item-actions">' +
+        '<button class="btn btn-gold btn-sm" onclick="openItemModal(' + item.id + ')">✏️</button>' +
+        '<button class="btn btn-red btn-sm" onclick="deleteItem(' + item.id + ')">🗑</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ========== ORDER ==========
+function updateOrderPreview() {
+  var checked = items.filter(function(i) { return i.checked; });
+  var listEl = document.getElementById('orderItemsList');
+  var totalEl = document.getElementById('orderTotal');
+  if (!checked.length) {
+    listEl.innerHTML = '<p style="color:#bbb;font-size:12px;">Items tick karain...</p>';
+    totalEl.textContent = 'Rs. 0';
+    return;
+  }
+  var total = 0;
+  listEl.innerHTML = checked.map(function(i) {
+    var qty = i.qty || 1;
+    var subtotal = i.sellPrice * qty;
+    total += subtotal;
+    return '<div class="order-item-row"><span>' + i.name + ' x' + qty + '</span><span>Rs.' + subtotal.toFixed(0) + '</span></div>';
+  }).join('');
+  totalEl.textContent = 'Rs. ' + total.toFixed(0);
+}
+
+function getOrderText() {
+  var customer = document.getElementById('orderCustomer').value || 'Customer';
+  var date = document.getElementById('orderDate').value || new Date().toLocaleDateString();
+  var note = document.getElementById('orderNote').value;
+  var checked = items.filter(function(i) { return i.checked; });
+  if (!checked.length) { alert('Pehle koi item tick karain!'); return null; }
+  var total = 0;
+  var lines = '\uD83D\uDED2 *REYAN HUSSAIN CONFECTIONARY*\n';
+  lines += '\uD83D\uDCC5 Date: ' + date + '\n';
+  lines += '\uD83D\uDC64 Customer: ' + customer + '\n';
+  lines += '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n';
+  checked.forEach(function(i) {
+    var qty = i.qty || 1;
+    var sub = i.sellPrice * qty;
+    total += sub;
+    lines += '\u2022 ' + i.name + ' x' + qty + ' = Rs.' + sub.toFixed(0) + '\n';
+  });
+  lines += '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n';
+  lines += '\uD83D\uDCB0 *TOTAL: Rs.' + total.toFixed(0) + '*\n';
+  if (note) lines += '\uD83D\uDCDD Note: ' + note + '\n';
+  lines += '\nShukriya! \uD83D\uDE4F';
+  return lines;
+}
+
+function sendOrderWhatsApp() {
+  var phone = document.getElementById('orderPhone').value.replace(/[^0-9]/g, '');
+  var text = getOrderText();
+  if (!text) return;
+  var url = 'https://wa.me/' + (phone || '') + '?text=' + encodeURIComponent(text);
+  window.open(url, '_blank');
+}
+
+function sendOrderSMS() {
+  var phone = document.getElementById('orderPhone').value;
+  var text = getOrderText();
+  if (!text) return;
+  window.open('sms:' + phone + '?body=' + encodeURIComponent(text));
+}
+
+function generateBillPDF() {
+  var customer = document.getElementById('orderCustomer').value || 'Customer';
+  var phone = document.getElementById('orderPhone').value || '';
+  var date = document.getElementById('orderDate').value || new Date().toLocaleDateString();
+  var note = document.getElementById('orderNote').value;
+  var checked = items.filter(function(i) { return i.checked; });
+  if (!checked.length) { alert('Pehle koi item tick karain!'); return; }
+
+  var total = 0;
+  var rows = '';
+  checked.forEach(function(i) {
+    var qty = i.qty || 1;
+    var sub = i.sellPrice * qty;
+    total += sub;
+    rows += '<tr><td>' + i.name + '</td><td style="text-align:center">' + qty + '</td><td style="text-align:right">Rs.' + i.sellPrice + '</td><td style="text-align:right">Rs.' + sub.toFixed(0) + '</td></tr>';
+  });
+
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>' +
+    'body{font-family:Arial,sans-serif;max-width:400px;margin:0 auto;padding:20px;color:#333}' +
+    'h1{text-align:center;color:#8a6200;font-size:22px}' +
+    '.subtitle{text-align:center;font-size:12px;color:#888;margin-bottom:10px}' +
+    'table{width:100%;border-collapse:collapse;margin:12px 0}' +
+    'th{background:#8a6200;color:#fff;padding:7px;font-size:12px}' +
+    'td{padding:6px;border-bottom:1px solid #eee;font-size:12px}' +
+    '.total-row{font-weight:bold;background:#fff8ee}' +
+    '.footer{text-align:center;margin-top:14px;font-size:11px;color:#888}' +
+    '.sig{margin-top:30px;border-top:1px solid #ccc;padding-top:10px;text-align:right;font-size:11px}' +
+    '</style></head><body>' +
+    '<h1>\uD83C\uDF6C Reyan Hussain Confectionary</h1>' +
+    '<div class="subtitle">Professional Bill</div><hr>' +
+    '<p style="font-size:12px"><b>Customer:</b> ' + customer + '<br>' +
+    (phone ? '<b>Phone:</b> ' + phone + '<br>' : '') +
+    '<b>Date:</b> ' + date + (note ? '<br><b>Note:</b> ' + note : '') + '</p>' +
+    '<table><thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody>' +
+    rows + '</tbody></table>' +
+    '<table><tr class="total-row"><td colspan="3"><b>TOTAL</b></td><td style="text-align:right"><b>Rs.' + total.toFixed(0) + '</b></td></tr></table>' +
+    '<div class="sig">Authorized Signature: _______________<br>Reyan Hussain Confectionary</div>' +
+    '<div class="footer">Shukriya! Dobara aain \uD83D\uDE4F</div>' +
+    '</body></html>';
+
+  var blob = new Blob([html], {type: 'text/html'});
+  var url = URL.createObjectURL(blob);
+  var text = '\uD83D\uDCC4 *BILL - Reyan Hussain Confectionary*\n\uD83D\uDC64 Customer: ' + customer + '\n\uD83D\uDCB0 Total: Rs.' + total.toFixed(0) + '\n\uD83D\uDD17 Bill download karain:\n(Neeche download ho raha hai)';
+  var a = document.createElement('a');
+  a.href = url; a.download = 'RHC_Bill_' + customer + '.html';
+  a.click();
+  setTimeout(function() {
+    var waUrl = 'https://wa.me/' + phone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent(text);
+    window.open(waUrl, '_blank');
+  }, 1000);
+}
+
+// ========== PROFIT ==========
+function renderProfit() {
+  var totalCost = 0, totalSell = 0;
+  var html = '';
+  items.forEach(function(item) {
+    var profit = item.sellPrice - item.costPrice;
+    totalCost += item.costPrice;
+    totalSell += item.sellPrice;
+    var pct = item.costPrice ? ((profit / item.costPrice) * 100).toFixed(1) : 0;
+    var color = profit >= 0 ? 'var(--green)' : 'var(--red)';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e4c8;">' +
+      '<span style="font-weight:700;font-size:13px">' + item.name + '</span>' +
+      '<span style="color:' + color + ';font-weight:800;font-size:13px">' +
+        (profit >= 0 ? '+' : '') + 'Rs.' + profit.toFixed(0) + ' (' + pct + '%)' +
+      '</span>' +
+    '</div>';
+  });
+  if (!html) html = '<div class="empty-state"><div class="icon">📊</div>Items add karain profit dekhne k liye.</div>';
+  document.getElementById('profitItemList').innerHTML = html;
+  var totalProfit = totalSell - totalCost;
+  document.getElementById('totalProfitDisplay').textContent = 'Rs. ' + totalProfit.toFixed(0);
+  document.getElementById('statTotalCost').textContent = totalCost.toFixed(0);
+  document.getElementById('statTotalSell').textContent = totalSell.toFixed(0);
+  document.getElementById('statItemCount').textContent = items.length;
+  document.getElementById('profitSummaryBox').style.background = totalProfit >= 0
+    ? 'linear-gradient(135deg,#1a7a3a,#27ae60)'
+    : 'linear-gradient(135deg,#c0392b,#e74c3c)';
+}
+
+function confirmClearData() {
+  if (confirm('Sab items delete hon ge! Pakka?')) {
+    items = []; saveItems(); renderItems(); renderProfit();
+    alert('Sab data clear ho gaya!');
+  }
+}
+
+// ========== UDHAR ==========
+function openUdharModal(editId) {
+  document.getElementById('uName').value = '';
+  document.getElementById('uPhone').value = '';
+  document.getElementById('uAmount').value = '';
+  document.getElementById('uNote').value = '';
+  document.getElementById('uDue').value = '';
+  document.getElementById('uEditId').value = '';
+  document.getElementById('uDate').value = new Date().toISOString().split('T')[0];
+  if (editId) {
+    var u = udharList.find(function(x) { return x.id == editId; });
+    if (u) {
+      document.getElementById('uName').value = u.name;
+      document.getElementById('uPhone').value = u.phone;
+      document.getElementById('uAmount').value = u.amount;
+      document.getElementById('uNote').value = u.note || '';
+      document.getElementById('uDate').value = u.date || '';
+      document.getElementById('uDue').value = u.due || '';
+      document.getElementById('uEditId').value = editId;
+    }
+  }
+  openModal('udharModal');
+}
+
+function saveUdhar() {
+  var name = document.getElementById('uName').value.trim();
+  var phone = document.getElementById('uPhone').value.trim();
+  var amount = parseFloat(document.getElementById('uAmount').value);
+  if (!name || !phone || isNaN(amount)) { alert('Naam, phone aur amount darain!'); return; }
+  var editId = document.getElementById('uEditId').value;
+  var obj = {
+    id: editId || Date.now(), name: name, phone: phone, amount: amount,
+    note: document.getElementById('uNote').value,
+    date: document.getElementById('uDate').value,
+    due: document.getElementById('uDue').value,
+    paid: false
+  };
+  if (editId) {
+    udharList = udharList.map(function(u) { return u.id == editId ? obj : u; });
+  } else {
+    udharList.push(obj);
+  }
+  localStorage.setItem('rhc_udhar', JSON.stringify(udharList));
+  closeModal('udharModal');
+  renderUdhar();
+}
+
+function markUdharPaid(id) {
+  udharList = udharList.map(function(u) {
+    if (u.id == id) u.paid = true;
+    return u;
+  });
+  localStorage.setItem('rhc_udhar', JSON.stringify(udharList));
+  renderUdhar();
+}
+
+function deleteUdhar(id) {
+  if (!confirm('Yeh udhar delete karain?')) return;
+  udharList = udharList.filter(function(u) { return u.id != id; });
+  localStorage.setItem('rhc_udhar', JSON.stringify(udharList));
+  renderUdhar();
+}
+
+function sendUdharReminder(id) {
+  var u = udharList.find(function(x) { return x.id == id; });
+  if (!u) return;
+  var msg = '\u26A0\uFE0F *Udhar Reminder - Reyan Hussain Confectionary*\n\n' +
+    '\uD83D\uDC64 ' + u.name + ' bhai/sahib,\n' +
+    'Aap ka Rs.*' + u.amount + '* udhar baqi hai.\n' +
+    (u.date ? '\uD83D\uDCC5 Date: ' + u.date + '\n' : '') +
+    (u.due ? '\u23F0 Due Date: ' + u.due + '\n' : '') +
+    (u.note ? '\uD83D\uDCDD: ' + u.note + '\n' : '') +
+    '\nMeherbani farma kar jald ada karain. Shukriya! \uD83D\uDE4F';
+  var phone = u.phone.replace(/[^0-9]/g, '');
+  window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function renderUdhar() {
+  var el = document.getElementById('udharList');
+  var pending = udharList.filter(function(u) { return !u.paid; });
+  var paid = udharList.filter(function(u) { return u.paid; });
+  var total = pending.reduce(function(s, u) { return s + u.amount; }, 0);
+  var html = '';
+  if (total > 0) {
+    html += '<div style="background:#fdecea;border-radius:10px;padding:10px 14px;margin-bottom:10px;text-align:center;">' +
+      '<div style="font-size:22px;font-weight:900;color:var(--red)">Rs. ' + total.toFixed(0) + '</div>' +
+      '<div style="font-size:11px;color:#888">Total Baqi Udhar</div></div>';
+  }
+  if (!udharList.length) {
+    html += '<div class="empty-state"><div class="icon">💸</div>Koi udhar nahi.</div>';
+  }
+  pending.forEach(function(u) {
+    html += '<div class="udhar-card">' +
+      '<div class="udhar-header">' +
+        '<div><div class="udhar-name">' + u.name + '</div>' +
+        '<div class="udhar-detail">\uD83D\uDCDE ' + u.phone + (u.date ? ' | \uD83D\uDCC5 ' + u.date : '') + (u.due ? ' | Due: ' + u.due : '') + '</div>' +
+        (u.note ? '<div class="udhar-detail">\uD83D\uDCDD ' + u.note + '</div>' : '') + '</div>' +
+        '<div class="udhar-amount">Rs. ' + u.amount + '</div>' +
+      '</div>' +
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">' +
+        '<button class="btn btn-wa btn-sm" onclick="sendUdharReminder(' + u.id + ')">\uD83D\uDCF1 Reminder</button>' +
+        '<button class="btn btn-green btn-sm" onclick="markUdharPaid(' + u.id + ')">\u2705 Paid</button>' +
+        '<button class="btn btn-gold btn-sm" onclick="openUdharModal(' + u.id + ')">\u270F\uFE0F Edit</button>' +
+        '<button class="btn btn-red btn-sm" onclick="deleteUdhar(' + u.id + ')">\uD83D\uDDD1</button>' +
+      '</div></div>';
+  });
+  if (paid.length) {
+    html += '<div style="font-size:11px;color:#888;font-weight:700;margin:8px 0 4px;">\u2705 Paid Udhar</div>';
+    paid.forEach(function(u) {
+      html += '<div class="udhar-card" style="opacity:.6">' +
+        '<div class="udhar-header">' +
+          '<div><div class="udhar-name">' + u.name + '</div><div class="udhar-detail">' + u.phone + '</div></div>' +
+          '<div><span class="badge badge-green">Paid</span><br><span style="font-size:13px">Rs.' + u.amount + '</span></div>' +
+        '</div>' +
+        '<button class="btn btn-red btn-sm" style="margin-top:6px" onclick="deleteUdhar(' + u.id + ')">\uD83D\uDDD1 Delete</button>' +
+      '</div>';
+    });
+  }
+  el.innerHTML = html;
+}
+
+// ========== CONTACTS ==========
+function openContactModal(editId) {
+  document.getElementById('cName').value = '';
+  document.getElementById('cPhone').value = '';
+  document.getElementById('cNote').value = '';
+  document.getElementById('cType').value = 'customer';
+  document.getElementById('cEditId').value = '';
+  if (editId) {
+    var c = contacts.find(function(x) { return x.id == editId; });
+    if (c) {
+      document.getElementById('cName').value = c.name;
+      document.getElementById('cPhone').value = c.phone;
+      document.getElementById('cNote').value = c.note || '';
+      document.getElementById('cType').value = c.type || 'customer';
+      document.getElementById('cEditId').value = editId;
+    }
+  }
+  openModal('contactModal');
+}
+
+function saveContact() {
+  var name = document.getElementById('cName').value.trim();
+  var phone = document.getElementById('cPhone').value.trim();
+  if (!name || !phone) { alert('Naam aur phone darain!'); return; }
+  var editId = document.getElementById('cEditId').value;
+  var obj = {
+    id: editId || Date.now(), name: name, phone: phone,
+    type: document.getElementById('cType').value,
+    note: document.getElementById('cNote').value
+  };
+  if (editId) {
+    contacts = contacts.map(function(c) { return c.id == editId ? obj : c; });
+  } else {
+    contacts.push(obj);
+  }
+  localStorage.setItem('rhc_contacts', JSON.stringify(contacts));
+  closeModal('contactModal');
+  renderContacts();
+}
+
+function deleteContact(id) {
+  if (!confirm('Contact delete karain?')) return;
+  contacts = contacts.filter(function(c) { return c.id != id; });
+  localStorage.setItem('rhc_contacts', JSON.stringify(contacts));
+  renderContacts();
+}
+
+function renderContacts() {
+  var el = document.getElementById('contactList');
+  if (!contacts.length) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📞</div>Koi contact nahi.</div>';
+    return;
+  }
+  var typeColors = { seller: '#fff3cd', buyer: '#d4edda', customer: '#d1ecf1' };
+  var typeEmojis = { seller: '🏭', buyer: '🤝', customer: '🛒' };
+  var grouped = { seller: [], buyer: [], customer: [] };
+  contacts.forEach(function(c) { grouped[c.type || 'customer'].push(c); });
+  var html = '';
+  ['seller', 'buyer', 'customer'].forEach(function(type) {
+    if (!grouped[type].length) return;
+    var labels = { seller: 'Suppliers (Sellers)', buyer: 'Buyers', customer: 'Customers' };
+    html += '<div style="font-size:12px;font-weight:800;color:var(--gold-dark);margin:10px 0 5px;">' + typeEmojis[type] + ' ' + labels[type] + '</div>';
+    grouped[type].forEach(function(c) {
+      html += '<div class="contact-card">' +
+        '<div class="contact-avatar" style="background:' + typeColors[type] + '">' + typeEmojis[type] + '</div>' +
+        '<div class="contact-info">' +
+          '<div class="contact-name">' + c.name + '</div>' +
+          '<div class="contact-num">' + c.phone + (c.note ? ' • ' + c.note : '') + '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:5px;flex-direction:column;">' +
+          '<a href="tel:' + c.phone + '" class="btn btn-blue btn-sm">\uD83D\uDCDE Call</a>' +
+          '<a href="https://wa.me/' + c.phone.replace(/[^0-9]/g,'') + '" target="_blank" class="btn btn-wa btn-sm">\uD83D\uDCF1 WA</a>' +
+          '<button class="btn btn-gold btn-sm" onclick="openContactModal(' + c.id + ')">\u270F\uFE0F</button>' +
+          '<button class="btn btn-red btn-sm" onclick="deleteContact(' + c.id + ')">\uD83D\uDDD1</button>' +
+        '</div>' +
+      '</div>';
+    });
+  });
+  el.innerHTML = html;
+}
+
+// ========== CALCULATOR ==========
+var calcCurrent = '0', calcPrev = '', calcOper = '', calcJustCalc = false;
+
+function calcNum(n) {
+  if (calcJustCalc) { calcCurrent = n; calcJustCalc = false; }
+  else calcCurrent = calcCurrent === '0' ? n : calcCurrent + n;
+  updateCalcDisplay();
+}
+function calcDot() {
+  if (calcJustCalc) { calcCurrent = '0.'; calcJustCalc = false; }
+  else if (!calcCurrent.includes('.')) calcCurrent += '.';
+  updateCalcDisplay();
+}
+function calcOp(op) {
+  if (calcOper && !calcJustCalc) calcEquals(true);
+  calcPrev = calcCurrent; calcOper = op; calcJustCalc = true;
+  document.getElementById('calcSub').textContent = calcPrev + ' ' + op;
+  updateCalcDisplay();
+}
+function calcEquals(fromOp) {
+  if (!calcOper || !calcPrev) return;
+  var a = parseFloat(calcPrev), b = parseFloat(calcCurrent), res;
+  if (calcOper === '+') res = a + b;
+  else if (calcOper === '-') res = a - b;
+  else if (calcOper === '*') res = a * b;
+  else if (calcOper === '/') res = b !== 0 ? a / b : 'Error';
+  calcCurrent = '' + (typeof res === 'number' ? parseFloat(res.toFixed(8)) : res);
+  if (!fromOp) { document.getElementById('calcSub').textContent = calcPrev + ' ' + calcOper + ' ' + calcPrev; calcOper = ''; calcPrev = ''; }
+  calcJustCalc = true;
+  updateCalcDisplay();
+}
+function calcClear() { calcCurrent = '0'; calcPrev = ''; calcOper = ''; calcJustCalc = false; document.getElementById('calcSub').textContent = ''; updateCalcDisplay(); }
+function calcSign() { calcCurrent = '' + (parseFloat(calcCurrent) * -1); updateCalcDisplay(); }
+function calcPercent() { calcCurrent = '' + (parseFloat(calcCurrent) / 100); updateCalcDisplay(); }
+function updateCalcDisplay() { document.getElementById('calcDisplay').textContent = calcCurrent; }
+
+function calcProfit() {
+  var cost = parseFloat(document.getElementById('pcCost').value) || 0;
+  var sell = parseFloat(document.getElementById('pcSell').value) || 0;
+  var el = document.getElementById('profitCalcResult');
+  if (!cost && !sell) { el.textContent = ''; return; }
+  var profit = sell - cost;
+  var pct = cost ? ((profit / cost) * 100).toFixed(1) : 0;
+  if (profit >= 0) {
+    el.style.background = '#e8f5e9'; el.style.color = '#1a7a3a';
+    el.textContent = '\uD83D\uDCC8 Faida: Rs. ' + profit.toFixed(2) + ' | ' + pct + '%';
+  } else {
+    el.style.background = '#fdecea'; el.style.color = '#c0392b';
+    el.textContent = '\uD83D\uDCC9 Nuksan: Rs. ' + Math.abs(profit).toFixed(2) + ' | ' + pct + '%';
+  }
+}
+
+// ========== INIT ==========
+renderItems();
+renderUdhar();
+renderContacts();
+renderProfit();
+</script>
+</body>
+</html>
